@@ -2,6 +2,8 @@
 % Robert Harwell
 % Samuel Smothers
 %
+% finally this works 
+
 % Files explanation:
 %   hebbian.m     - Creates a weight matrix using hebbian learning
 %   pseudoinv.m   - Creates a weight matrix using pseudo-inverse
@@ -23,14 +25,14 @@ M_0 = ...
       -1  1  1  1 -1  ;
       -1  1  1  1 -1  ;
       -1  1  1  1 -1  ;
-       1 -1 -1 -1  1  ] ;   
+       1 -1 -1 -1  1  ] ;
 % convert 6x5 matrix to 30x1 vector
 P_0 = M_0(:);
 % 000
 T_0 = [-1;
        -1;
-       -1]; 
-   
+       -1];
+
 % Digit `1`
 M_1 = ...
     [  1 -1 -1  1  1  ;
@@ -58,7 +60,7 @@ P_2 = M_2(:);
 T_2 = [-1;
        1;
        -1];
-   
+
 % Digit `3`
 M_3 = ...
     [ -1 -1 -1 -1  1  ;
@@ -66,13 +68,13 @@ M_3 = ...
        1  1  1  1 -1  ;
        1  1 -1 -1 -1  ;
        1  1  1  1 -1  ;
-      -1 -1 -1 -1  1  ];   
+      -1 -1 -1 -1  1  ];
 P_3 = M_3(:);
 % 011
 T_3 = [-1;
        1;
        1];
-   
+
 % Digit `4`
 M_4 = ...
     [ -1  1  1  1 -1  ;
@@ -85,8 +87,8 @@ P_4 = M_4(:);
 % 100
 T_4 = [1;
        -1;
-       -1];  
-   
+       -1];
+
 % Digit `5`
 M_5 = ...
     [  1 -1 -1 -1 -1  ;
@@ -99,7 +101,7 @@ P_5 = M_5(:);
 % 101
 T_5 = [1;
        -1;
-       1]; 
+       1];
 
 % Digit `6`
 M_6 = ...
@@ -127,7 +129,7 @@ M_R = ...
       -1  1  1  1 -1  ];
 P_R = M_R(:);
 %
-   
+
 % Letter `H`
 M_H = ...
     [ -1  1  1  1 -1  ;
@@ -189,7 +191,7 @@ for i = 2:length(digits)
     % concat next col to P and T
     P(:,i) = digits{i};
     T(:,i) = t_digits{i};
-    
+
     Wh{i-1} = hebbian(W_init, P, T); %#ok<SAGROW>
     Wi{i-1} = pseudoinv(W_init, P, T); %#ok<SAGROW>
 end
@@ -208,20 +210,20 @@ for i = 1:length(Wh)
        for j = 1:(i+1)
            %..10 times each
            for k = 1:10
-               % corrupt n*2 pixels 
+               % corrupt n*2 pixels
                noisyP = pixcorrupt(P(:,j),(n*2));
-               
+
                ah = neuron(Wh{i},noisyP);
                ai = neuron(Wi{i},noisyP);
-               
+
                if isequal(ah,T(:,j))
                    hebb_correct = hebb_correct + 1;
                end
                if isequal(ai,T(:,j))
                    pseudo_correct = pseudo_correct + 1;
                end
-               
-               num_tests = num_tests + 1;    
+
+               num_tests = num_tests + 1;
            end
        end
        % find percent of correct outputs for n-noisy pixels
@@ -229,7 +231,7 @@ for i = 1:length(Wh)
        pseudo_error = 1 - (pseudo_correct/num_tests);
        results(i,(n*2-1)) = hebb_error;
        results(i,(n*2)) = pseudo_error;
-    end 
+    end
 end
 
 
@@ -247,5 +249,3 @@ for i = 1:length(results)
     end
     fprintf('\n');
 end
-
-
