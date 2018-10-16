@@ -173,8 +173,8 @@ letters{1} = P_R;
 letters{2} = P_H;
 
 
-num_inputs = 30;
-num_outputs = 3;
+num_inputs = length(P_0);
+num_outputs = length(T_0);
 
 W_init = zeros([num_outputs num_inputs]);
 
