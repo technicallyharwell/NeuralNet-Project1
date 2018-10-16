@@ -2,7 +2,7 @@
 % Robert Harwell
 % Samuel Smothers
 %
-% finally this works 
+% finally this works
 
 % Files explanation:
 %   hebbian.m     - Creates a weight matrix using hebbian learning
@@ -17,6 +17,8 @@
 %   First a matrix representation, for easy human viewing..
 %   ..second is the Mx1 vector containing each column of the matrix..
 %   ..last is the Tx1 target output vector for the associated input
+
+
 
 % Digit `0`
 M_0 = ...
