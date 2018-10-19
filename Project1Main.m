@@ -10,6 +10,7 @@
 %   get_img.m     - Converts an Nx1 vector to an IxJ grayscale image
 %   pixcorrupt.m  - Corrupts n-random pixels in an input vector
 
+clear
 
 % The following are constants which represent inputs
 %   First a matrix representation, for easy human viewing..
@@ -24,10 +25,11 @@ M_0 = ...
       -1  1  1  1 -1  ;
       -1  1  1  1 -1  ;
        1 -1 -1 -1  1  ] ;   
-% convert 6x5 matrix to 30x1 vector
+% convert RxC matrix to (R*C)x1 vector
 P_0 = M_0(:);
-% 000
+% 0000
 T_0 = [-1;
+       -1;
        -1;
        -1]; 
    
@@ -40,8 +42,9 @@ M_1 = ...
        1  1 -1  1  1  ;
        1  1 -1  1  1  ];
 P_1 = M_1(:);
-% 001
+% 0001
 T_1 = [-1;
+       -1;
        -1;
        1];
 
@@ -54,9 +57,10 @@ M_2 = ...
        1 -1  1  1  1  ;
        1 -1 -1 -1 -1  ];
 P_2 = M_2(:);
-% 010
+% 0010
 T_2 = [-1;
-       1;
+       -1;
+        1;
        -1];
    
 % Digit `3`
@@ -68,8 +72,9 @@ M_3 = ...
        1  1  1  1 -1  ;
       -1 -1 -1 -1  1  ];   
 P_3 = M_3(:);
-% 011
+% 0011
 T_3 = [-1;
+       -1;
        1;
        1];
    
@@ -82,8 +87,9 @@ M_4 = ...
        1  1  1  1 -1  ;
        1  1  1  1 -1  ];
 P_4 = M_4(:);
-% 100
-T_4 = [1;
+% 0100
+T_4 = [-1;
+        1;
        -1;
        -1];  
    
@@ -96,8 +102,9 @@ M_5 = ...
        1  1  1  1 -1  ;
        1 -1 -1 -1  1  ];
 P_5 = M_5(:);
-% 101
-T_5 = [1;
+% 0101
+T_5 = [-1;
+        1;
        -1;
        1]; 
 
@@ -110,10 +117,56 @@ M_6 = ...
       -1  1  1 -1  1  ;
       -1 -1 -1 -1  1  ];
 P_6 = M_6(:);
-% 110
-T_6 = [1;
+% 0110
+T_6 = [-1;
+        1;
        1;
        -1];
+   
+% Digit '7'
+M_7 = ...
+    [ -1 -1 -1 -1 -1  ;
+       1  1  1  1 -1  ;
+       1  1  1 -1  1  ;
+       1  1 -1  1  1  ;
+       1 -1  1  1  1  ;
+      -1  1  1  1  1 ];
+P_7 = M_7(:);
+%0111
+T_7 = [-1;
+        1;
+        1;
+        1 ];
+    
+% Digit '8'
+M_8 = ...
+    [ -1 -1 -1 -1 -1  ;
+      -1  1  1  1 -1  ;
+      -1 -1 -1 -1 -1  ;
+      -1 -1 -1 -1 -1  ;
+      -1  1  1  1 -1  ;
+      -1 -1 -1 -1 -1 ];    
+P_8 = M_8(:);
+%1000
+T_8 = [ 1;
+       -1;
+       -1;
+       -1 ];
+   
+% Digit '9'
+M_9 = ...
+    [ -1 -1 -1 -1 -1  ;
+      -1  1  1  1 -1  ;
+      -1  1  1  1 -1  ;
+      -1 -1 -1 -1 -1  ;
+       1  1  1  1 -1  ;
+       1  1  1  1 -1 ];    
+P_9 = M_9(:);
+%1001
+T_9 = [ 1;
+       -1;
+       -1;
+        1 ];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -158,6 +211,9 @@ digits{4} = P_3;
 digits{5} = P_4;
 digits{6} = P_5;
 digits{7} = P_6;
+digits{8} = P_7;
+digits{9} = P_8;
+digits{10} = P_9;
 
 % cell array for indexing digit target outputs
 t_digits{1} = T_0;
@@ -167,6 +223,9 @@ t_digits{4} = T_3;
 t_digits{5} = T_4;
 t_digits{6} = T_5;
 t_digits{7} = T_6;
+t_digits{8} = T_7;
+t_digits{9} = T_8;
+t_digits{10} = T_9;
 
 % cell array for letter vectors
 letters{1} = P_R;
@@ -240,6 +299,7 @@ end
 
 % Display the results (in a table with the given format):
 fprintf('\nPart (i) and (ii) results:\n')
+fprintf('W \t\t H(2)\tP(2)   H(4)   P(4)   H(6)   P(6)\n')
 for i = 1:length(results)
     fprintf('0-%d  =>  ', i);
     for j = 1:6
