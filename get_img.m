@@ -1,9 +1,9 @@
-% Converts a Rx1 input into a 6x5 grayscale image:
-function img = get_img( P )
+% Converts a Rx1 input into a RxC grayscale image:
+function img = get_img( P, M )
 
     % Initialize iterators and blank canvas
-    img_rows = 6;
-    img_cols = 5;
+    img_rows = length(M(:,1));
+    img_cols = length(M(1,:));
     img_mat = zeros([img_rows img_cols]);
 
     % Map values from input vector to image matrix
